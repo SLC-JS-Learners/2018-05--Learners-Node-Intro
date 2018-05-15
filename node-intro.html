@@ -25,6 +25,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
+        font-family: 'Yanone Kaffeesatz';
         font-size: 250%;
       }
       .remark-container {
@@ -70,7 +71,7 @@
       }
       .remark-inline-code {
         font-size: 95%;
-        padding: 0.5% 1%;
+        padding: 0.3% 1%;
         background-color: hsl(0, 0%, 95%);
       }
       p {
@@ -162,7 +163,7 @@ _Note_: &ensp;I'll be demoing in CodeAnywhere tonight,
   1. Create a new directory for tonight's code along (e.g. 'purple-people-eater')
   
 **If you do *_not_* already have node installed:**
-  1. Go sign up for an account at [codeanywhere.com](codeanywhere.com)
+  1. Go sign up for an account at [codeanywhere.com](https://codeanywhere.com)
   2. Create a new project (e.g. 'purple-people-eater')
   3. Add a new Connection Wizard, specifically the Node.js stack on Ubuntu
 
@@ -171,7 +172,7 @@ _Note_: &ensp;I'll be demoing in CodeAnywhere tonight,
 
 # Quick CodeAnywhere Tour
 
-- View 👉 Layout 👉 Columns:3
+- View 👉 Layout 👉 Columns:2
 - View 👉 File Explorer (`⌥-X`; `option-X`)
 - View 👉 MiniMap (uncheck)
 - Terminal tab: right-click project name 👉 SSH Terminal
@@ -273,8 +274,9 @@ layout: false
 npm install learnyounode
 ```
 
-- `npm install` installs a node module
+- `npm install` installs one or more node modules
 - in this case, it installs the `learnyounode` module
+- if no module name is provided, but there is another file (we'll look at that file in a moment) which  includes dependencies, then it will install those modules
 
 ]
 ]
@@ -303,6 +305,34 @@ node node_modules/learnyounode/bin/learnyounode
   - `learnyounode` is the filename  
     (which does not have the usual `.js` extension)
 
+
+]
+]
+---
+
+layout: false
+.columns[
+.col-left[
+  ## local install
+  ## local bin
+  ## REPL
+]
+.col-right[
+
+# REPL
+
+
+```bash
+node 
+```
+
+- running it without any paramaters switches your terminal / command line to a Node REPL (Read-eval-print loop)
+  - **_If you want to, follow-along with this part._**
+  - `node`
+  - you'll notice the terminal prompt changes
+  - `1+1` >>> `2`
+  - `^-C` (ctrl-C) - _twice_ to exit the REPL mode
+
 ]
 ]
 
@@ -313,6 +343,7 @@ layout: false
 .col-left[
   ## local install
   ## local bin
+  ## REPL
   ## scripts
 ]
 
@@ -362,13 +393,14 @@ layout: false
 .col-left[
   ## local install
   ## local bin
+  ## REPL
   ## scripts
 ]
 .col-right[
 
 # Scripts
 
-### Custom scripts for the npm project  
+### Custom scripts names for that npm project  
 - require `run`, e.g. `npm run teachMeNode` 
 - if there are no other command line or terminal commands with the same name, `yarn` does not require the `run` parameter 
 
@@ -386,6 +418,7 @@ layout: false
 .col-left[
   ## local install
   ## local bin
+  ## REPL
   ## scripts
   ## global install
 ]
@@ -400,34 +433,7 @@ Go ahead and run this command now:
 
 - available from anywhere on your computer 
 - global packages _can_ set-up their own global command line/terminal scripts
-  - in this case, you now have a `learnyounode` command available
-
-]
-]
-
----
-
-layout: false
-.columns[
-.col-left[
-  ## local install
-  ## local bin
-  ## scripts
-  ## global install
-  ## dependencies
-]
-.col-right[
-
-# Module Dependencies
-
-In addition to the `--global` flag, there are two other common `npm install` flags:
-- Dependencies
-  - use `--save` flag
-  - will install these modules when `npm install` is used for your package
-
-- Dev Dependencies
-  - use `--save-dev` flag
-  - will not install these modules in a production environment
+  - for example, you now have a `learnyounode` command available
 
 ]
 ]
@@ -436,13 +442,13 @@ In addition to the `--global` flag, there are two other common `npm install` fla
 
 # Node School
 
-`learnyounode` is just one of many self-based [workshoppers](https://nodeschool.io/#workshopper-list) available at nodeschool.io to help you learn essential Node.js-related skills
+**"learnyounode"** is just one of many self-based [workshoppers](https://nodeschool.io/#workshopper-list) available at [nodeschool.io](https://nodeschool.io/#workshopper-list) to help you learn essential Node.js-related skills.
   
 --
 
 ----
   
-**_Let's get started with this one by running:_**
+**_Once you have the `learnyounode` workshopper installed, start working through it by running:_**
 ```bash
  `learnyounode`
 ```
@@ -461,6 +467,8 @@ console.log("HELLO WORLD")
 
 # 02-baby-steps.js
 
+
+
 ```javascript
 const [cmd, file, `...numberArray`] = `process.argv`
 const sum = nums `=>` nums`.reduce`( 
@@ -476,6 +484,9 @@ const sum = nums `=>` nums`.reduce`(
 - `=>`, i.e. [arrow function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 - [Array's `reduce()` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 - [`console.info`](https://nodejs.org/api/console.html#console_console_info_data_args)
+
+
+
 
 ---
 
@@ -526,6 +537,28 @@ function countLines (err, data) {
 ]
 
 
+---
+
+# 07-http-client.js
+
+
+.shrink[
+
+```javascript
+const http = require('http')
+
+const handleResponse = response =>
+  response.setEncoding('utf8')
+          .on('data', console.log)
+          .on('error', console.error)
+
+http.get(process.argv[2], handleResponse)
+    .on('error', console.error)
+}
+```
+]
+
+
 
 ---
 
@@ -533,7 +566,7 @@ function countLines (err, data) {
 
 **Stay Curious**  
 **and**  
-**Keep Coding**
+**Keep Coding!**
 
 ]
   
